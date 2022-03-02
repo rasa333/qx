@@ -1,0 +1,208 @@
+# Display settings
+#
+# =   cursor position (must be given) (1 char)
+# ^   marker position (must be given) (1 char)
+# n   filename right
+# N   filename left
+# s   filesize right (max 8 chars)
+# S   filesize left (max 8 chars)
+# l   number of links right (2 chars)
+# L   number of links left (2 chars)
+# i   inode number (5 chars)
+# o   owner (8 chars)
+# g   group (8 chars)
+# a   last access time (12 chars)
+# c   creation time (12 chars)
+# m   modify time (12 chars)
+# P   full permission (10 chars)
+# p   main permission (4 chars)
+# t   type of file (1 char)
+#
+
+noinverse
+separator " "
+#layout 1 "%s %p%=%^%t%N"
+layout 2 "%p %S %=%^%t%N"
+
+#
+# dir-command-arguments:
+#  number    | slot number [0-12]
+#  directory | directory to load
+#  *         | move cursor to the newest file When updating
+#  nohidden  | Don't show dotfiles
+# 
+
+dir 1 /bin * nohidden
+dir 2 ~ * nohidden 1
+dir 3 /dev
+dir 4 /etc
+dir 5 /var/storage
+
+history 20
+cursor " ->"
+
+prefix add ^y
+
+
+
+#
+# You can redefine a key-function:
+#
+# List of functions implementet in qx:
+# (the arrow-keys are double-defineable)
+#
+# File moving:
+#  right  _right   | Next file pos      
+#  left	  _left    | Previous file pos    
+#  up     _up      | Up one line          
+#  down   _down    | Down one line        
+#  end    _end     | Last page            
+#  home   _home    | First Page           
+#  pgup   _pgup    | Up one page          
+#  pgdn   _pgdn    | Down one page
+#
+# Menu moving:
+#  inc             | Next menu proc       
+#  dec             | Previous menu proc
+#
+# Tagging:
+#  tag-all         | Tags all files       
+#  untag-all       | Untags all files
+#  match           | Tag matching files
+#  tag             | Mark file
+#  inverse         | Untag all tagged and vise versa
+#
+# Windowing:
+#  split-window    | Creat another window 
+#  prev-window     | Previous Window      
+#  del-other-win   | Delete other window
+#  next-window     | Next window
+#
+# Directory:
+#  chdir           | Change directory
+#  refresh-dir     | Refresh directory
+#  goto-dir        | Go to directory
+#  goto-home       | Jump into home dir
+#  showdirtable    | Display dir table
+#
+# Misc:
+#  shell           | Shell escape
+#  start-proc      | Starts a procedure   
+#  rename          | Rename a file
+#  copying         | Copy a file
+#  lo[0-9]         | Layout choice
+#  sl[0-11]        | Directory choice
+#  help            | Help screen
+#  quit            | Leave qx
+#  
+
+#
+#
+# Examples:
+#
+#     bindkey untag-all -
+#  
+# binds the function "untag-all" to the '-' key.
+#
+# or
+#
+#    bindkey lo4 4
+#
+# binds the function "lo4" to the '4' key.
+#
+#   unbindkey chdir
+#
+# make the function "chdir" not available
+# 
+
+bindkey shell ^Xz
+bindkey split-window ^X2
+bindkey help ^Yh
+
+#
+# Procedure examples:
+#
+
+proc View
+exec "sxiv %f" | *.jpg *.gif *.jpeg *.JPG *.PNG *.png *.GIF *.pnm *.PNM
+exec "vlc %f" | *.mp4 *.MP4 *.avi *.AVI *.mkv *.MKV
+exec "gv %f" | *.ps *.PS
+exec "mocp %f" | *.mp3 *.MP3 *.ogg *.OGG *.flac *.FLAC
+exec "xpdf %f" | *.pdf *.PDF
+exec "xine %f" | *.avi *.mp4 *.wma
+exec "tar tvzf %f | $PAGER" | *.tgz *.tar.gz | cls
+exec "tar tvf %f | $PAGER" | *.tar | cls
+exec "unrar lt %f | $PAGER " | *.rar | cls
+exec "unzip -v %f | $PAGER" | *.zip | cls
+exec "$PAGER %f" || cls
+key v
+help "Anschauen von Textdatei(en)"
+end
+
+proc Edit
+exec "$EDITOR %f" || update cls
+key e
+help "Editeren von Datei(en)"
+end
+
+proc Remove
+# Remove is the name of the procedure displayed in the menu list.
+exec "rm -f %f" || sure update
+# Executes the Unix-command "rm" with option "-f" and the list
+# of tagged files or - if no files are tagged - the file the cursor
+# stands on. Other % chars are:
+#   p{string}   : Ask for a pathname or an option etc.
+#   n           : Only the file the cursor stands on
+#   t           : Only the tagged files. If no files are tagged, it breaks.
+# Possible modes are:
+#   cls      : Clear screen before execution
+#   sure     : Ask for sure before execution the command
+#   update   : Updates the directory after execution
+#   wait     : Wait for a key hit after execution
+key r
+# defines the hotkey which starts this procedure
+help "Loescht Datei(en)"
+# short message what this procedure do
+end
+
+proc Move
+exec "mv %f %p{Path: }" || update
+key m
+help "Verschiebt Datei(en)"
+end
+
+proc Copy
+exec "cp %f %p{Path: }" || update
+key c
+help "Kopieren von Datei(en)"
+end
+
+proc htop
+exec "htop" || cls
+key p (p-Taste)
+help "htop Aufrufen"
+end
+
+proc Mkdir
+exec "mkdir %p{Name: }" || update
+key M
+help "Einrichten von neuen Verzeichnissen"
+end
+
+proc Rmdir
+exec "rmdir %f" || update
+key R
+help "Loeschen von leeren Verzeichnissen"
+end
+
+proc gZip
+exec "gzip %f" || update
+key Z
+help "Komprimiert Dateien"
+end
+
+proc gUnzip
+exec "gunzip %f" || update
+key U
+help "Dekomprimiert Dateien"
+end
