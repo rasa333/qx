@@ -72,12 +72,6 @@ prefix add ^y
 #  tag             | Mark file
 #  inverse         | Untag all tagged and vise versa
 #
-# Windowing:
-#  split-window    | Creat another window 
-#  prev-window     | Previous Window      
-#  del-other-win   | Delete other window
-#  next-window     | Next window
-#
 # Directory:
 #  chdir           | Change directory
 #  refresh-dir     | Refresh directory
@@ -116,7 +110,6 @@ prefix add ^y
 # 
 
 bindkey shell ^Xz
-bindkey split-window ^X2
 bindkey help ^Yh
 
 #
@@ -136,7 +129,7 @@ exec "unrar lt %f | $PAGER " | *.rar | cls
 exec "unzip -v %f | $PAGER" | *.zip | cls
 exec "$PAGER %f" || cls
 key v
-help "Anschauen von Textdatei(en)"
+help "Anschauen von Datei(en)"
 end
 
 proc Edit
