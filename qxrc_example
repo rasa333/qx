@@ -19,8 +19,8 @@
 # t   type of file (1 char)
 #
 
-noinverse
-separator " "
+#noinverse
+separator "| "
 #layout 1 "%s %p%=%^%t%N"
 layout 2 "%p %S %=%^%t%N"
 
