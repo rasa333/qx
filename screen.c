@@ -465,7 +465,6 @@ void put_help_screen()
 
     clear();
     put_center("-*- (Q)uick uni(X) 2.0alpha -*-");
-    put_center("Copyright by Heiko Jappe");
     puts("\n");
     put_center(HELP_BANNER);
     putchar('\n');
