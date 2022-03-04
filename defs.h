@@ -80,10 +80,10 @@
 #define QX_NOHIDDEN        357
 
 typedef struct {
-  char *scan;
-  int   id;
-  char *kbd_name;
-  char *help;
+    char *scan;
+    int   id;
+    char *kbd_name;
+    char *help;
 } KEYS;
 
 extern int UID, GID;           /* getuid() and getgid() */
@@ -174,29 +174,29 @@ extern int UID, GID;           /* getuid() and getgid() */
 #endif
 
 typedef struct {
-  char   *str;
-  char  **list;
-  int     mode;
+    char   *str;
+    char  **list;
+    int     mode;
 } EXEC;
 
 
 typedef struct {
-  char      *label;
-  char      *help;
-  char      *key;
-  EXEC      *exec;
-  int        exec_cnt;
-  char      *kbd_name;
+    char      *label;
+    char      *help;
+    char      *key;
+    EXEC      *exec;
+    int        exec_cnt;
+    char      *kbd_name;
 } PROC_LIST;
 
 
 typedef struct {
-  PROC_LIST *pl;
-  int        max;
-  int        now;
-  int        page_max;
-  int        page_now;
-  int       *page_mem;
+    PROC_LIST *pl;
+    int        max;
+    int        now;
+    int        page_max;
+    int        page_now;
+    int       *page_mem;
 } PROC;
 
 extern PROC *Proc;
@@ -210,28 +210,28 @@ extern PROC *Proc;
 
 
 typedef struct {
-  DI     *fl;
-  bool   *tagged;
-  int     flpos;
-  bool    need_update;
-  int     no_of_files_tagged;
-  int     layout_entry_len;
-  int     layout_now;
-  int     max_filename_len;
-  int     max_filename_len_cut;
-  int     max_sizestr_len;
-  int     max_line_entries;
-  bool    nohidden;
-  char   *cwd;
-  char   *label;
-  struct {
-    int p_cursor;
-    int p_selector;
-  } position;
-  struct {
-    int x;
-    int y;
-  } screen, oldscr;
+    DI     *fl;
+    bool   *tagged;
+    int     flpos;
+    bool    need_update;
+    int     no_of_files_tagged;
+    int     layout_entry_len;
+    int     layout_now;
+    int     max_filename_len;
+    int     max_filename_len_cut;
+    int     max_sizestr_len;
+    int     max_line_entries;
+    bool    nohidden;
+    char   *cwd;
+    char   *label;
+    struct {
+	int p_cursor;
+	int p_selector;
+    } position;
+    struct {
+	int x;
+	int y;
+    } screen, oldscr;
 } DIR_LIST;
 
 
@@ -239,20 +239,20 @@ typedef struct {
 
 
 typedef struct {
-  char     *layout_tbl[10];
-  int       now;
-  bool      update;
-  char     *separator;
-  char     *cursor;
-  char     *cursor_spaces;
-  bool      noinverse;
-  struct {
-    char     *wd_tbl;
-    DIR_LIST *dl_tbl;
-    int       time_tbl;
-    bool      set_flpos_to_newest;
-    bool      nohidden;
-  } sdir[12];
+    char     *layout_tbl[10];
+    int       now;
+    bool      update;
+    char     *separator;
+    char     *cursor;
+    char     *cursor_spaces;
+    bool      noinverse;
+    struct {
+	char     *wd_tbl;
+	DIR_LIST *dl_tbl;
+	int       time_tbl;
+	bool      set_flpos_to_newest;
+	bool      nohidden;
+    } sdir[12];
 } DL_SELECT;
 
 extern DL_SELECT DL_select;

@@ -6,14 +6,14 @@
 char cap_buffer[1024],tcstrings[256];
 
 char 
-  *SO,		/* Stand-Out Modus	*/
-  *SE,		/* Ende SO Modus	*/
-  *CL,		/* Clear Screen		*/
-  *CE,          /* Clear to EOLine      */
-  *AL,          /* Add New Line         */
-  *DL,          /* Del Line             */
-  *CD,          /* Clear end of Display */
-  *CM; 		/* Cursor motion        */
+*SO,		/* Stand-Out Modus	*/
+    *SE,		/* Ende SO Modus	*/
+    *CL,		/* Clear Screen		*/
+    *CE,          /* Clear to EOLine      */
+    *AL,          /* Add New Line         */
+    *DL,          /* Del Line             */
+    *CD,          /* Clear end of Display */
+    *CM; 		/* Cursor motion        */
 
 int COLS, LINES;
 int NO_ALDL;           /* Terminal can't add or delete line */
@@ -21,39 +21,39 @@ int NO_ALDL;           /* Terminal can't add or delete line */
 
 void initscr()
 {
-  char *tname, *tcs;
+    char *tname, *tcs;
 
-  NO_ALDL = 0;
+    NO_ALDL = 0;
   
-  if ((tname = getenv("TERM")) == NULL) { 
-    fprintf(stderr, "TERM not defined\n"); 
-    exit(1); 
-  }
+    if ((tname = getenv("TERM")) == NULL) { 
+	fprintf(stderr, "TERM not defined\n"); 
+	exit(1); 
+    }
 
-  if (tgetent(cap_buffer, tname) == -1) { 
-    fprintf(stderr, "unknown Terminal: %s\n", tname ); 
-    exit(1); 
-  }
+    if (tgetent(cap_buffer, tname) == -1) { 
+	fprintf(stderr, "unknown Terminal: %s\n", tname ); 
+	exit(1); 
+    }
 
-  tcs = tcstrings;   
-  *tcs++ = 0; 			
-  SO = tgetstr("so", &tcs);
-  SE = tgetstr("se", &tcs);
-  CL = tgetstr("cl", &tcs);
-  AL = tgetstr("al", &tcs);
-  DL = tgetstr("dl", &tcs);
-  CE = tgetstr("ce", &tcs);
-  CM = tgetstr("cm", &tcs);
-  CD = tgetstr("cd", &tcs);
-  LINES = tgetnum("li");
-  COLS  = tgetnum("co");
+    tcs = tcstrings;   
+    *tcs++ = 0; 			
+    SO = tgetstr("so", &tcs);
+    SE = tgetstr("se", &tcs);
+    CL = tgetstr("cl", &tcs);
+    AL = tgetstr("al", &tcs);
+    DL = tgetstr("dl", &tcs);
+    CE = tgetstr("ce", &tcs);
+    CM = tgetstr("cm", &tcs);
+    CD = tgetstr("cd", &tcs);
+    LINES = tgetnum("li");
+    COLS  = tgetnum("co");
 
-  if (!CL || !CE || !CM || !CD) {
-    fprintf(stderr,"Dieses Programm ist fuer ihr Terminal nicht geeignet.\n");
-    exit(0);
-  }
-  if (!DL || !AL)
-    NO_ALDL = 1;
+    if (!CL || !CE || !CM || !CD) {
+	fprintf(stderr,"Dieses Programm ist fuer ihr Terminal nicht geeignet.\n");
+	exit(0);
+    }
+    if (!DL || !AL)
+	NO_ALDL = 1;
 }
 
 
@@ -63,7 +63,7 @@ void initscr()
 int outchar(c)
      int c;
 {
-  putchar(c);
+    putchar(c);
 }
 
 
@@ -72,8 +72,8 @@ int outchar(c)
 
 void clear()
 {
-  tputs(CL,1,outchar);
-  fflush(stdout);
+    tputs(CL,1,outchar);
+    fflush(stdout);
 }
 
 
@@ -82,8 +82,8 @@ void clear()
 
 void gotoxy(int x, int y)
 {
-  tputs(tgoto(CM,x,y), 1, outchar);
-  fflush(stdout);
+    tputs(tgoto(CM,x,y), 1, outchar);
+    fflush(stdout);
 }  
 
 
@@ -92,8 +92,8 @@ void gotoxy(int x, int y)
 
 void clrtobot()
 {
-  tputs(CD,1,outchar);
-  fflush(stdout);
+    tputs(CD,1,outchar);
+    fflush(stdout);
 }
 
 
@@ -103,10 +103,10 @@ void clrtobot()
 
 void clrtoeol()
 {
-  if (CE) {
-    tputs(CE,1,outchar);
-    fflush(stdout);
-  }
+    if (CE) {
+	tputs(CE,1,outchar);
+	fflush(stdout);
+    }
 }
 
 
@@ -115,8 +115,8 @@ void clrtoeol()
 
 void insertln()
 {
-  tputs(AL,1,outchar);
-  fflush(stdout);
+    tputs(AL,1,outchar);
+    fflush(stdout);
 }
 
 
@@ -125,13 +125,13 @@ void insertln()
 
 void insert_n_lines(int y, int n)
 {
-  int i;
+    int i;
 
-  gotoxy(0, LINES - 1 - n);
-  clrtobot();
-  gotoxy(0, y);
-  for ( i = 0 ; i < n ; i++ ) 
-    insertln();
+    gotoxy(0, LINES - 1 - n);
+    clrtobot();
+    gotoxy(0, y);
+    for ( i = 0 ; i < n ; i++ ) 
+	insertln();
 }
 
 
@@ -140,8 +140,8 @@ void insert_n_lines(int y, int n)
 
 void deleteln()
 {
-  tputs(DL,1,outchar);
-  fflush(stdout);
+    tputs(DL,1,outchar);
+    fflush(stdout);
 }
 
 
@@ -150,11 +150,11 @@ void deleteln()
 
 void delete_n_lines(int y, int n)
 {
-  int i;
+    int i;
 
-  gotoxy(0, y);
-  for ( i = 0 ; i < n ; i++ )
-    deleteln();
+    gotoxy(0, y);
+    for ( i = 0 ; i < n ; i++ )
+	deleteln();
 }
 
 
@@ -163,8 +163,8 @@ void delete_n_lines(int y, int n)
 
 void standout()
 {
-  tputs(SO,1,outchar);
-  fflush(stdout);
+    tputs(SO,1,outchar);
+    fflush(stdout);
 }
 
 
@@ -173,6 +173,6 @@ void standout()
 
 void standend()
 {
-  tputs(SE,1,outchar);
-  fflush(stdout);
+    tputs(SE,1,outchar);
+    fflush(stdout);
 }

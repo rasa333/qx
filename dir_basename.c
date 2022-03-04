@@ -27,23 +27,23 @@
 
 char *dirname (char *path)
 {
-  char *newpath;
-  char *slash;
+    char *newpath;
+    char *slash;
 
-  slash = rindex (path, '/');
-  if (slash == 0)
-    return strdup (".");
+    slash = rindex (path, '/');
+    if (slash == 0)
+	return strdup (".");
 
-  newpath = malloc (strlen (path) + 1);
-  if (newpath == 0)
-    return 0;
-  strcpy (newpath, path);
-  slash += newpath - path;
-  /* Remove any trailing slashes and final element. */
-  while (slash > newpath && *slash == '/')
-    --slash;
-  slash[1] = 0;
-  return newpath;
+    newpath = malloc (strlen (path) + 1);
+    if (newpath == 0)
+	return 0;
+    strcpy (newpath, path);
+    slash += newpath - path;
+    /* Remove any trailing slashes and final element. */
+    while (slash > newpath && *slash == '/')
+	--slash;
+    slash[1] = 0;
+    return newpath;
 }
 
 
@@ -70,10 +70,10 @@ char *dirname (char *path)
 #ifndef HAVE_BASENAME
 char *basename (char *name)
 {
-  char *base;
+    char *base;
 
-  base = rindex (name, '/');
-  return base ? base + 1 : name;
+    base = rindex (name, '/');
+    return base ? base + 1 : name;
 }
 #endif
 
