@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <grp.h>
-#include <time.h>
 #include <fcntl.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include "defs.h"
 
@@ -457,7 +455,7 @@ char *convert_filename_to_printable(unsigned char *name, int max_len)
     str = malloc(max_len + 1);
     i = 0;
     while(*name) {
-	if (!isprint(*name) && strchr("äöüßÄÖÜ", *name) == NULL) {
+	if (!isprint(*name) && strchr("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", *name) == NULL) {
 	    sprintf(octstr, "\\%3.3o", *name);
 	    j = 0;
 	    while(str[i++] = octstr[j++]) {

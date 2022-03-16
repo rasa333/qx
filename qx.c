@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     DL_SELECT_table_init_null();
     rc_name = (char *)findrc();
     if (!rc_name)
-	qx_exit(-1);
+    	qx_exit(-1);
     readrc(rc_name);
     DL_SELECT_table_init_set();
     dl = DL_SELECT_dir(0);

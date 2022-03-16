@@ -7,8 +7,9 @@ LDFLAGS        = -s
 
 objects        		     := $(patsubst %.c,%.o,$(wildcard *.c))
 
+all	: qx
 
-all qx	: $(objects)
+qx	: $(objects)
 	$(CC) $(LDFLAGS) -o qx $(objects) -ltermcap
 
 
